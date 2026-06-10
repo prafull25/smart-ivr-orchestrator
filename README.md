@@ -36,16 +36,16 @@ IVR_Project_LLD/
 ├── app/
 │   └── application.py         # Main IVR loop
 ├── engine/
-│   ├── state_base.py          # BaseState ABC
-│   └── state_engine.py        # State Pattern Context
+│   ├── state_base.py          
+│   └── state_engine.py        
 ├── states/
 │   ├── root_menu_state.py
 │   ├── billing_state.py
 │   └── tech_support_state.py
 ├── factory/
-│   └── state_factory.py       # Registry-based Factory
+│   └── state_factory.py       
 ├── interceptors/
-│   ├── base_interceptor.py    # Chain of Responsibility ABC
+│   ├── base_interceptor.py    
 │   ├── exit_interceptor.py
 │   └── operator_interceptor.py
 ├── commands/
@@ -55,12 +55,12 @@ IVR_Project_LLD/
 │   ├── run_diagnostic_command.py
 │   └── reboot_router_command.py
 ├── services/
-│   ├── base_billing_service.py    # DIP ABC
-│   ├── base_diagnostic_service.py # DIP ABC
+│   ├── base_billing_service.py   
+│   ├── base_diagnostic_service.py 
 │   ├── billing_service.py
 │   └── diagnostic_service.py
 ├── audit/
-│   ├── event_bus.py           # Observer Pattern
+│   ├── event_bus.py          
 │   ├── audit_event.py
 │   ├── audit_formatter.py
 │   └── audit_logger.py        # Dual-channel: SQLite + RotatingFileHandler
@@ -69,7 +69,7 @@ IVR_Project_LLD/
 │   └── service_results.py
 ├── constants/
 │   ├── messages.py
-│   ├── choices.py             # Menu choice Enums
+│   ├── choices.py             
 │   └── config.py
 └── tests/
     ├── test_commands.py
