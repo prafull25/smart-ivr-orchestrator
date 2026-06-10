@@ -79,10 +79,14 @@ IVR_Project_LLD/
     └── test_audit.py
 ```
 
-## Design Principles
+## Design Patterns
 
-- **SOLID** — OCP via registry factory, DIP via service ABCs, SRP throughout
-- **No external libraries** — stdlib only (`abc`, `dataclasses`, `enum`, `sqlite3`, `logging`, `uuid`, `unittest`)
-- **Fully deterministic** — all service responses are fixed mocks; no randomness or I/O beyond console
-- **Dual-channel audit** — every user action, state transition, and service call is logged to both SQLite (`logs/ivr_audit.db`) and a rotating file (`logs/ivr_operational.log`)
-- **70 unit tests** — all layers independently testable without mocking production code
+| Pattern | Purpose | Location |
+|---|---|---|
+| **State** | Each menu is a class; `StateEngine` holds current state and drives transitions | `engine/`, `states/` |
+| **Chain of Responsibility** | `exit` / `operator` intercept input before it reaches any state | `interceptors/` |
+| **Command** | Each action (ViewBalance, PayBill, Reboot) is an encapsulated object with `execute()` | `commands/` |
+| **Observer** | `EventBus` delivers `AuditEvent` to `AuditLogger` — states never import the logger | `audit/` |
+| **Registry Factory** | States self-register via key; `create(key)` has zero `if/else` chains | `factory/` |
+
+
