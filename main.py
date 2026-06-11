@@ -31,7 +31,12 @@ def main() -> None:
     billing_svc: BillingServiceABC = BillingService()
     diagnostic_svc: DiagnosticServiceABC = DiagnosticService()
 
-    state_factory = StateFactory(billing_svc, diagnostic_svc)
+    from services.service_container import ServiceContainer
+    container = ServiceContainer()
+    container.register("billing_svc", billing_svc)
+    container.register("diagnostic_svc", diagnostic_svc)
+
+    state_factory = StateFactory(container)
     initial_state = state_factory.create("ROOT")
 
     engine = StateEngine(

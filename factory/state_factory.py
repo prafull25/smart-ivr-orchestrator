@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from typing import Callable, Dict, TYPE_CHECKING
+from typing import Callable, Dict
 
-if TYPE_CHECKING:
-    from engine.state_base import BaseState
-    from services.base_billing_service import BillingServiceABC
-    from services.base_diagnostic_service import DiagnosticServiceABC
+from engine.state_base import BaseState
+from services.service_container import ServiceContainer
 
 
 class StateFactory:
@@ -15,15 +13,10 @@ class StateFactory:
     def register(cls, key: str, builder: Callable) -> None:
         cls._registry[key] = builder
 
-    def __init__(
-        self,
-        billing_svc: BillingServiceABC,
-        diagnostic_svc: DiagnosticServiceABC,
-    ) -> None:
-        self._billing_svc = billing_svc
-        self._diagnostic_svc = diagnostic_svc
+    def __init__(self, container: ServiceContainer) -> None:
+        self._container = container
 
     def create(self, key: str) -> BaseState:
         if key not in self._registry:
             raise KeyError(f"No state registered for key: '{key}'")
-        return self._registry[key](self._billing_svc, self._diagnostic_svc)
+        return self._registry[key](self._container)

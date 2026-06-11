@@ -3,8 +3,8 @@ from states.billing_state import BillingState
 from states.tech_support_state import TechSupportState
 from factory.state_factory import StateFactory
 
-StateFactory.register("ROOT",         lambda b, d: RootMenuState())
-StateFactory.register("BILLING",      lambda b, d: BillingState(b))
-StateFactory.register("TECH_SUPPORT", lambda b, d: TechSupportState(d))
+StateFactory.register("ROOT",         lambda c: RootMenuState())
+StateFactory.register("BILLING",      lambda c: BillingState(c.get("billing_svc")))
+StateFactory.register("TECH_SUPPORT", lambda c: TechSupportState(c.get("diagnostic_svc")))
 
 __all__ = ["RootMenuState", "BillingState", "TechSupportState"]
